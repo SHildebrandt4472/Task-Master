@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>My Web Page</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Welcome to My Web Page</h1>
+    
+    <button>Login</button>
+    <button>Signup</button>
+    <a class="button" href="{{ url_for('tasks')}}">My tasks</a>
+
+    <a href="{{ url_for('debug')}}">Debug</a>
+    <p>gfghfhjfg</p>
+    
+{% endblock %}<!DOCTYPE html>
