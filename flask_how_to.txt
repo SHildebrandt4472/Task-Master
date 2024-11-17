@@ -1,0 +1,84 @@
+
+
+Notes on how to maintain a Flask App
+====================================
+
+Create/Maintain Virtual Environment
+------------------------------
+1. Create and populate virtual environment sub dir named 'venv' with ....
+
+  python -m venv venv
+
+2. After using pip to install packages to the virtual environment.  Keep a record of
+   the whats installed by creating a requires.txt file in the project directory.
+
+  pip freeze > requires.txt
+
+3. When setting up the virtual environment on a different system, you can rebuild your
+   working set of installed packages from the requires.txt file as with ...
+
+  pip install -r requires.txt
+
+To deploy on linux
+==================
+Create venv (from project directory) using the desired version of python
+  python3.7 -m venv venv
+
+Activate:
+  source venv/bin/activate
+
+Update pip:
+  pip install --upgrade pip
+
+Install app dependancies:
+  pip install -r requirements.txt
+
+
+Run APP in debug mode
+---------------------
+1. Activate virtual environment (from project dir)
+
+  WINDOWS: venv\Scripts\activate
+  LINUX:   source venv/bin/activate
+
+2. Start debug server
+
+  WINDOWS: run.bat
+
+
+DB Migration -  Add new table
+-----------------------------
+
+1. Add model class to models.py
+
+2. Create migration with:
+
+  flask db migrate -m "very short desc"
+
+3.  Check new migration file in migrations\versions\ and modify as appropriate
+
+4. Apply migration with:
+
+  flask db upgrade
+
+5. Can undo upgrade with "downgrade" if necessary then modify or delete migration file
+
+
+DB Recreate initial migration (new DB and all tables)
+-----------------------------------------------------
+The reason for doing this is because changes have been made to Models and the app is still
+pre-production so there is no need to keep track of individual migration versions.
+
+1. Delete all migration version files (project\migrations\versions\*.*)
+
+2. Delete SQLite DB File (project\database\XXX.db)
+
+3. Recreate migration files with ...
+
+  flask db migrate -m "Initial Create Tables"
+
+4. Re create DB with ...
+
+  flask db upgrade
+
+

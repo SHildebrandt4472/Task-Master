@@ -1,0 +1,31 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>      
+      {% if title %}
+	-     {{title}}
+      {%endif%}
+    </title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    
+    {% block head %}{% endblock %}
+  </head>
+  
+  <body>
+    {% if debug_message %}
+      <div class="debug">
+        {{ debug_message }}
+      </div>
+    {% endif %}
+
+    {% include '_header.html' %}
+    
+    <div id="page">
+      {% block page_flash %}
+        {% include '_flash_messages.html' %}
+      {% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+   </body>
+</html>
