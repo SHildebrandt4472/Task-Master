@@ -2,8 +2,9 @@ from flask import render_template, flash, redirect, url_for, request, session
 from .main_forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlparse
-from app.models import db, User
+from app.models import db, User, Task
 from app.main import bp
+import datetime
 
 
 @bp.route('/')
@@ -72,5 +73,32 @@ def register():
       flash('Your registration is complete, please login to continue')
       return redirect(url_for('.login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@bp.route('/delete/<id>', methods=['GET', 'POST'])
+def delete_task(id):
+    task = Task.query.get(id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('.home'))
+
+@bp.route('/edit/<id>', methods=['GET', 'POST'])
+def edit_task(id):
+    task = Task.query.get(id)
+    return render_template('edit_task.html', title='Edit Task', task=task)
+    
+@bp.route('/update/<id>', methods=['POST'])
+def update_task(id):
+    task = Task.query.get(id)
+    task.name = request.form['name']
+    task.description = request.form['description']
+    task.category = request.form['category']
+    task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
+
+    db.session.commit() 
+    return redirect(url_for('.home'))
+
+
+
 
 
