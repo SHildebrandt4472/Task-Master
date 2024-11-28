@@ -10,7 +10,7 @@ class Task(db.Model):
   name = db.Column(db.String(32))                      
   description = db.Column(db.String(250))                 
   category = db.Column(db.String(10))                 
-  status = db.Column(db.Integer) 
+  status = db.Column(db.Integer,default=STS_NEW) 
   due_by = db.Column(db.DateTime)         
   created_at = db.Column(db.DateTime, default=db.func.datetime('now'))      
 
@@ -20,6 +20,8 @@ class Task(db.Model):
   def done(self):
     self.status = STS_COMPLETED 
 
+  def is_outstanding(self):
+    return self.status < STS_COMPLETED
 
-
-
+  def is_completed(self):
+    return self.status == STS_COMPLETED
