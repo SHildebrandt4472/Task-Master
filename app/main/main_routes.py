@@ -72,7 +72,7 @@ def register():
       db.session.commit()
       flash('Your registration is complete, please login to continue')
       return redirect(url_for('.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', form=form)
 
 
 @bp.route('/delete/<id>', methods=['GET', 'POST'])
@@ -85,7 +85,7 @@ def delete_task(id):
 @bp.route('/edit/<id>', methods=['GET', 'POST'])
 def edit_task(id):
     task = Task.query.get(id)
-    return render_template('edit_task.html', title='Edit Task', task=task)
+    return render_template('edit_task.html', task=task, action_url = url_for('main.update_task', id=task.id))
     
 @bp.route('/update/<id>', methods=['POST'])
 def update_task(id):
@@ -93,11 +93,28 @@ def update_task(id):
     task.name = request.form['name']
     task.description = request.form['description']
     task.category = request.form['category']
-    task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
+    if request.form['due_by']:
+      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
 
     db.session.commit() 
     return redirect(url_for('.home'))
 
+@bp.route('/new', methods=['GET'])
+def new_task():
+  task = Task()
+  return render_template('new_task.html', task=task, action_url = url_for('main.add_task', id=task.id))
+
+@bp.route('/add>', methods=['POST'])
+def add_task():
+    task = Task()
+    task.name = request.form['name']
+    task.description = request.form['description']
+    task.category = request.form['category']
+    if request.form['due_by']:
+      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
+    current_user.tasks.append(task)
+    db.session.commit() 
+    return redirect(url_for('.home'))
 
 
 

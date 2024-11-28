@@ -4,42 +4,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='tasks.css') }}">
 {% endblock %}
 
-{% block header %}
-  <h1>My Tasks</h1>
-{% endblock %}
-
 {% block content %}
-
-  <h2>Edit task</h2>
-    <form action="{{ url_for('main.update_task', id=task.id) }}" method="POST">
-        <div class="task-details">
-            <label for="name">Name:</label>
-            <input type="text" id="title" name="name" value="{{ task.name }}" required>
-        </div>
-        <div class="task-details">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required>{{ task.description }}</textarea>
-        </div>
-        <div class="task-details">
-            <label for="due_by">Due By:</label>
-            <input type="date" id="due_by" name="due_by" value="{{ task.due_by }}">
-        </div>
-        <div class="task-details">
-            <label for="priority">Priority:</label>
-            <select id="priority" name="priority" required>
-                <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
-                <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
-                <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
-            </select>
-        </div>
-        <div class="task-details">
-            <label for="category">Category:</label>
-            <input type="text" id="category" name="category" value="{{ task.category }}" >            
-        </div>
-        <div class="task-details">
-            <input type="submit" value="Update Task">
-        </div>
-    </form>   
+<div id="new-task">
     
-  </div>  
+  <h2>Edit task</h2>
+    {% include '_task_form.html'   %}  
+</div>
 {% endblock %}

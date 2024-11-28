@@ -4,40 +4,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='tasks.css') }}">
 {% endblock %}
 
-{% block header %}
-  <h1>My Tasks</h1>
-{% endblock %}
-
 {% block content %}
-
-  <h2>Add new task</h2>
-
-    <div id="new-task">
-      <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-          {{ form.name.label }}<br>
-          {{ form.name(size=32,placeholder="Enter Task Name") }}<br>
-          {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          {{ form.description.label }}<br>
-          {{ form.description(size=32,placeholder="Enter Task Description") }}<br>
-          {% for error in form.description.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          {{ form.category.label }}<br>
-          {{ form.category(size=32,placeholder="Enter Task Category") }}<br>
-          {% for error in form.category.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>        
-      </form>
-    {% endfor %}      
-  </div>  
+<div id="new-task">
+    
+  <h2>Add task</h2>
+    {% include '_task_form.html' %}  
+</div>
 {% endblock %}

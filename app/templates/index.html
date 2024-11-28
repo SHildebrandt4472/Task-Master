@@ -4,14 +4,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='tasks.css') }}">
 {% endblock %}
 
-{% block header %}
-  <h1>My Tasks</h1>
-  <a href="{{ url_for('new_task') }}" class="btn">Add New Task</a>
-{% endblock %}
 
 {% block content %}
 
   <h2>My Tasks</h2>
+  <a href="{{ url_for('main.new_task') }}" class="btn">Add New Task</a>
 
   <div class="tasks">      
     {% for task in current_user.tasks %}         
