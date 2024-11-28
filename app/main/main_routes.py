@@ -74,31 +74,6 @@ def register():
       return redirect(url_for('.login'))
     return render_template('register.html', form=form)
 
-
-@bp.route('/delete/<id>', methods=['GET', 'POST'])
-def delete_task(id):
-    task = Task.query.get(id)
-    db.session.delete(task)
-    db.session.commit()
-    return redirect(url_for('.home'))
-
-@bp.route('/edit/<id>', methods=['GET', 'POST'])
-def edit_task(id):
-    task = Task.query.get(id)
-    return render_template('edit_task.html', task=task, action_url = url_for('main.update_task', id=task.id))
-    
-@bp.route('/update/<id>', methods=['POST'])
-def update_task(id):
-    task = Task.query.get(id)
-    task.name = request.form['name']
-    task.description = request.form['description']
-    task.category = request.form['category']
-    if request.form['due_by']:
-      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
-
-    db.session.commit() 
-    return redirect(url_for('.home'))
-
 @bp.route('/new', methods=['GET'])
 def new_task():
   task = Task()
@@ -116,6 +91,34 @@ def add_task():
     db.session.commit() 
     return redirect(url_for('.home'))
 
+@bp.route('/edit/<id>', methods=['GET', 'POST'])
+def edit_task(id):
+    task = Task.query.get(id)
+    return render_template('edit_task.html', task=task, action_url = url_for('main.update_task', id=task.id))
+    
+@bp.route('/update/<id>', methods=['POST'])
+def update_task(id):
+    task = Task.query.get(id)
+    task.name = request.form['name']
+    task.description = request.form['description']
+    task.category = request.form['category']
+    if request.form['due_by']:
+      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
+ 
+    db.session.commit() 
+    return redirect(url_for('.home'))
 
+@bp.route('/completed/<id>', methods=['GET', 'POST'])
+def complete_task(id):
+    task = Task.query.get(id)
+    task.done()
+    db.session.commit()
+    return redirect(url_for('.home'))
 
+@bp.route('/delete/<id>', methods=['GET', 'POST'])
+def delete_task(id):
+    task = Task.query.get(id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('.home'))
 

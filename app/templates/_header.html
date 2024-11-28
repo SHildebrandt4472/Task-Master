@@ -14,7 +14,6 @@
     {% if not current_user.is_anonymous %}    
       <li><a href="{{ url_for('.home') }}">HOME</a></li>
       <li class="right"><a href="{{ url_for('main.logout') }}">LOGOUT</a></li>
-      <li class="right"><a href="{ url_for('main.settings') }">SETTINGS</a></li>
     {% endif %}
   </ul>
 </div>
