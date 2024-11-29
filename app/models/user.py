@@ -12,7 +12,7 @@ ACCESS = {
   'basic'    : 10,
   'advanced' : 20,
   'admin'    : 30,
-  'super'    : 40,  # AIC admin
+  'super'    : 40, 
 }
 
 ACCESS_STRS = {

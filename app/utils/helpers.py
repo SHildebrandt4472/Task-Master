@@ -5,7 +5,6 @@
 from flask import url_for , request
 from markupsafe import Markup
 import datetime
-#from app.utils.misc import tz_offset, utc_to_aiclocal, utc_to_user_local, get_localtime, get_user_timezone
 
 display_timezones = False  # should be user pref
 
@@ -29,8 +28,14 @@ def pluralise(word, cnt, suffix="s"):
     return(word+suffix)
 
 #
-# UTC Date Time Routines
+# Date Time Routines
 #
+
+def html_date(dt):
+  if not isinstance(dt, datetime.datetime):
+    return ''
+  return dt.strftime("%Y-%m-%d")
+
 def fmt_date(dt):
   if not isinstance(dt, datetime.datetime):
     return ''

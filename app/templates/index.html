@@ -7,12 +7,17 @@
 
 {% block content %}
 
-  <h2>My Tasks</h2>
-  <a href="{{ url_for('main.new_task') }}" class="btn">Add New Task</a>
+  <h2>My Tasks</h2>  
 
   <div class="tasks">      
     {% for task in current_user.tasks %}         
-      <div class="task">        
+
+      {% if task.is_outstanding() %}
+        <a class="task sts-sts-{{task.status}}" href="{{ url_for('main.edit_task', id=task.id) }}">
+      {% else %}    
+        <div class="task sts-{{task.status}}">     
+      {% endif %}    
+        
         <div class="task-info">
           <div class="task-name">
             {{ task.name }}
@@ -27,24 +32,32 @@
           {{ task.category }}
         </div>      
 
-
         <div class="task-btns">
+
+          <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
+              <input class="delete" type="submit" value="X" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
+          </form>
+          
           {% if task.is_outstanding() %}
             <form action="{{ url_for('main.complete_task', id=task.id) }}" method="POST">
-              <button type="submit">Done</button>
-            </form>
-          
-            <form action="{{ url_for('main.edit_task', id=task.id) }}" method="POST">
-              <button type="submit">Edit</button>
-            </form>
+              <input class="done" type="submit" value="&#x2714 Done">
+            </form> 
           {% endif %}
 
-            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
-              <button type="submit">Delete</button>
-            </form>
-        </div>         
-      </div>  
+        </div>      
+
+      {% if task.is_outstanding() %}
+        </a>            
+      {% else %}    
+        </div>  
+      {% endif %}    
+      
+    
     {% endfor %}      
+  </div>  
+
+  <div class="actions">
+    <a href="{{ url_for('main.new_task') }}">Add New Task</a>
   </div>  
 {% endblock %}
 

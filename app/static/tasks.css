@@ -16,12 +16,13 @@
     padding-bottom: 5px;
   }
   
-  .task-btns {
-    min-width: 60px;
-  }
   
   .task {  
     background: linear-gradient(#55c,#33c);  
+  }  
+
+  .task.sts-1 {  
+    background: linear-gradient(rgb(34, 34, 134), rgb(30, 30, 103));  
   }  
   
   .task-info {
@@ -56,4 +57,98 @@
     font-weight: bold;
     padding-left: 10px;
   }  
+
+  .task-btns { 
+    min-width: 80px;    
+  }
+
+  .task-btns form {
+    display: inline;  
+    float: right;
+    margin-right: 5px;    
+  }
+
+  .task-btns input[type=submit] {
+    display: inline-block; 
+    font: inherit;  
+    font-size: 16px;    
+    font-weight: bold;  
+    padding: 0px 3px;  
+    height: 30px; 
+    border-radius: 3px; 
+    border-top: 1px solid #be4;
+    border-left: 1px solid #ad3;
+    border-right: 1px solid #370;
+    border-bottom: 1px solid #370;
+    background: #7a3;  
+    background: linear-gradient(#9c5, #591);   
+    box-shadow: rgba(0,0,0,1) 2px 2px 3px;
+    text-align: center;
+    color: #fff;     
+}
+
+.task-btns input[type=submit]:hover {
+  background: linear-gradient(rgb(118, 157, 66), rgb(62, 111, 12));   
+}
+
+.task-btns input[type=submit].delete {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top: 1px solid #777;
+  border-left: 1px solid #777;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  background: #7a3;  
+  background: linear-gradient(#777, #555); 
+  
+}
+
+a.task {
+  text-decoration: none;  
+}
+
+a.task:hover {
+  background: linear-gradient(rgb(106, 106, 250),rgb(64, 64, 254));  
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+.actions a {
+  text-decoration: none;
+  display: inline-block; 
+  font: inherit;  
+  font-size: 16px;    
+  font-weight: bold;  
+  padding: 3px 10px;  
+  height: 30px; 
+  border-radius: 3px; 
+  border-top: 1px solid #be4;
+  border-left: 1px solid #ad3;
+  border-right: 1px solid #370;
+  border-bottom: 1px solid #370;
+  background: #7a3;  
+  background: linear-gradient(#9c5, #591);   
+  box-shadow: rgba(0,0,0,1) 2px 2px 3px;
+  text-align: center;
+  color: #fff;   
+}
+
+.actions a:hover {
+  background: linear-gradient(rgb(118, 157, 66), rgb(62, 111, 12));   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  
   

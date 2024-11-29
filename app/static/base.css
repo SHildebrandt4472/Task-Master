@@ -59,8 +59,7 @@ p {
   padding: 0;
 }
 
-#menubar li {
-  float: left;
+#menubar li {  
   display: inline-block;
   padding: 14px 5px;
   /*background-color: #037;*/
@@ -84,9 +83,14 @@ p {
   background: #aaa;  
 }
 
+
 #page {
+  max-width: 1000px;
+  margin: auto;
+  
 
 }
+
 
 .error {
   color: red;
@@ -109,7 +113,7 @@ input[type=submit].link {
   font-weight: normal;
   font-size: 16px;
   color: #666;
-  background-color: inherit;
+  background-color: inherit;  
 }
 
 a.link:hover,
@@ -130,6 +134,17 @@ a.button {
 
 a.button:hover {
   background-color: #ccc;
+}
+
+#forbidden { 
+  padding: 10px 10px;
+  border: 2px solid red;  
+  border-radius: 10px;
+  width: 50%;
+  margin: 20px auto;
+  text-align: center;
+  color: #fff;
+  background: #444;
 }
 
 

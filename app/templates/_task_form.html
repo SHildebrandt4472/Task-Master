@@ -1,17 +1,20 @@
-<form action="{{ action_url }}" method="POST">
-    <div class="task-details">
+<form id="taskform" action="{{ action_url }}" method="POST">
+    <div>
         <label for="name">Name:</label>
         <input type="text" id="title" name="name" value="{{ task.name }}" required>
     </div>
-    <div class="task-details">
+
+    <div>
         <label for="description">Description:</label>
-        <textarea id="description" name="description" required>{{ task.description }}</textarea>
+        <textarea id="description" name="description">{{ task.description }}</textarea>
     </div>
-    <div class="task-details">
+
+    <div>
         <label for="due_by">Due By:</label>
-        <input type="date" id="due_by" name="due_by" value="{{ task.due_by }}">
+        <input type="date" id="due_by" name="due_by" value="{{ h.html_date(task.due_by) }}">
     </div>
-    <div class="task-details">
+
+    <div>
         <label for="priority">Priority:</label>
         <select id="priority" name="priority" required>
             <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
@@ -19,11 +22,18 @@
             <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
         </select>
     </div>
-    <div class="task-details">
+    
+    <div>
         <label for="category">Category:</label>
         <input type="text" id="category" name="category" value="{{ task.category }}" >            
     </div>
-    <div class="task-details">
+
+    <div>
         <input type="submit" value="Save Task">
+    </div>
+
+    <div>
+      <hr>
+      <p><a href="{{ url_for('.home') }}">Back</a></li></p>
     </div>
 </form>  

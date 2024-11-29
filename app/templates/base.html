@@ -4,27 +4,25 @@
     <title>      
       {% if title %}
 	-     {{title}}
+      {% else %}
+        Task Master
       {%endif%}
     </title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
     
     {% block head %}{% endblock %}
   </head>
   
   <body>
-    {% if debug_message %}
-      <div class="debug">
-        {{ debug_message }}
-      </div>
-    {% endif %}
-
     {% include '_header.html' %}
     
     <div id="page">
       {% block page_flash %}
         {% include '_flash_messages.html' %}
       {% endblock %}
+      
       {% block content %}{% endblock %}
     </div>
    </body>
