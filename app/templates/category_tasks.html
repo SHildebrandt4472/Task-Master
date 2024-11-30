@@ -22,7 +22,7 @@
   {% include '_task_list.html' %}
 
   <div class="actions">
-    <a href="{{ url_for('main.new_task') }}">Add New Task</a>
+    <a href="{{ url_for('main.new_task',category=selected_category) }}">Add New Task</a>
   </div>  
 {% endblock %}
 

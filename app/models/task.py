@@ -25,3 +25,6 @@ class Task(db.Model):
 
   def is_completed(self):
     return self.status == STS_COMPLETED
+
+  def is_overdue(self):
+    return self.due_by and self.due_by < datetime.datetime.now()

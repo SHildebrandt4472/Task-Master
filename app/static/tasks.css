@@ -47,6 +47,12 @@
     color: #dcdcdc;    
     /* min-width: 160px; */
   }
+
+  @media only screen and (max-width: 600px) {
+    .task-description {
+      display: none;
+    }
+  }
   
   .task-category {
     /* border: 1px solid pink;  */

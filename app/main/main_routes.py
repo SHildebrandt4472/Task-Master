@@ -29,9 +29,9 @@ def category_tasks(category):
 
     categories_rows = Task.query.with_entities(Task.category).filter_by(user_id=current_user.id).distinct()
     categories = [row[0] for row in categories_rows]
-    for category in categories:
-      if not category:
-        categories.remove(category)
+    for cat in categories:
+      if not cat:
+        categories.remove(cat)
         categories.append('Other')
     categories = ['All'] + categories
 
@@ -98,9 +98,12 @@ def register():
     return render_template('register.html', form=form)
 
 @bp.route('/new')
+@bp.route('/new/<category>')
 @login_required
-def new_task():
+def new_task(category=None):
   task = Task()
+  if category != "All" and category != "Other":
+    task.category = category
   return render_template('new_task.html', task=task, action_url = url_for('main.add_task', id=task.id))
 
 @bp.route('/add>', methods=['POST'])
@@ -109,7 +112,7 @@ def add_task():
     task = Task()
     task.name = request.form['name']
     task.description = request.form['description']
-    task.category = request.form['category']
+    task.category = request.form['category'].title()
     if request.form['due_by']:
       task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
     current_user.tasks.append(task)
@@ -134,7 +137,7 @@ def update_task(id):
 
     task.name = request.form['name']
     task.description = request.form['description']
-    task.category = request.form['category']
+    task.category = request.form['category'].title()
     if request.form['due_by']:
       task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
  
