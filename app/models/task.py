@@ -28,3 +28,8 @@ class Task(db.Model):
 
   def is_overdue(self):
     return self.due_by and self.due_by < datetime.datetime.now()
+
+  def due_str(self):
+    if self.due_by:
+      return 'Due: ' + self.due_by.strftime("%d %b %y")
+    return ''

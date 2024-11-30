@@ -15,7 +15,11 @@
           <div class="task-description">
             {{ task.description }}
           </div>      
-      </div>
+
+          <div class="task-due">
+            {{ task.due_str() }}
+          </div>
+        </div>
 
         <div class="task-category">
           {{ task.category or 'Other' }}

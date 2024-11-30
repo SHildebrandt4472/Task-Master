@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from app.models import db, User, Task
 from app.main import bp
 import datetime
+from sqlalchemy import text
 
 
 @bp.route('/')
@@ -12,8 +13,10 @@ import datetime
 def home():
     if not current_user.is_authenticated:
       return redirect(url_for('.login'))
-        
-    return render_template('index.html', title='Home',tasks=current_user.tasks)
+
+    tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
+
+    return render_template('index.html', title='Home',tasks=tasks)
 
 @bp.route('/categorytasks/<category>')
 @login_required

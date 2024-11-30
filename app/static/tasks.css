@@ -53,6 +53,15 @@
       display: none;
     }
   }
+  .task-due {
+    /*border: 1px solid pink; */
+    display: inline-block;  
+    /*float: right;*/
+    margin-right: 10px;
+    margin-left: 10px;
+    color: #f6c525;    
+    font-weight: bold;
+  }  
   
   .task-category {
     /* border: 1px solid pink;  */
@@ -63,6 +72,8 @@
     font-weight: bold;
     padding-left: 10px;
   }  
+
+
 
   .task-btns { 
     min-width: 80px;    
