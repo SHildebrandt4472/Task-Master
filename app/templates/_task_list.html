@@ -2,7 +2,7 @@
     {% for task in tasks %}         
 
       {% if task.is_outstanding() %}
-        <a class="task sts-sts-{{task.status}}" href="{{ url_for('main.edit_task', id=task.id) }}">
+        <a class="task sts-sts-{{task.status}}" href="#" onclick="toggle_details('{{ task.id }}')">
       {% else %}    
         <div class="task sts-{{task.status}}">     
       {% endif %}    
@@ -27,9 +27,6 @@
 
         <div class="task-btns">
 
-          <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
-              <input class="delete" type="submit" value="X" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
-          </form>
           
           {% if task.is_outstanding() %}
             <form action="{{ url_for('main.complete_task', id=task.id) }}" method="POST">
@@ -44,6 +41,29 @@
       {% else %}    
         </div>  
       {% endif %}    
+
+      <div id="taskdetails-{{task.id}}" class="task-drop-down">
+        
+        <div class="full-task-description">
+            <span class="label">Description:</span>{{ task.description }}
+          </div>
+
+          <div class="task-due-date">
+            <span class="label">Due by date:</span>{{ h.fmt_date(task.due_by) }}
+          </div>
+        
+          <div class="task-priority">
+            <span class="label">Priority:</span>{{ task.priority }}
+          </div>
+
+          <div class="task-actions">
+            <a class="" href="{{ url_for('main.edit_task', id=task.id) }}">Edit</a>
+
+            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
+                <input class="delete" type="submit" value="Delete" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
+            </form>
+          </div>
+      </div>
       
     
     {% endfor %}      

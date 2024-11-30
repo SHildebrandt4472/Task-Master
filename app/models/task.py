@@ -4,15 +4,19 @@ from app.models import db
 STS_NEW = 0
 STS_COMPLETED = 1
 
+PRIORITY_CHOICES = [(1, 'Low'), (2, 'Medium'), (3, 'High')]
+
 class Task(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))    
   name = db.Column(db.String(32))                      
   description = db.Column(db.String(250))                 
-  category = db.Column(db.String(10))                 
+  category = db.Column(db.String(10))   
+  priority = db.Column(db.Integer,default=1)              
   status = db.Column(db.Integer,default=STS_NEW) 
   due_by = db.Column(db.DateTime)         
-  created_at = db.Column(db.DateTime, default=db.func.datetime('now'))      
+  created_at = db.Column(db.DateTime, default=db.func.datetime('now'))
+
 
   def __repr__(self):
     return f"<Task {self.id}: {self.name}>"   
@@ -33,3 +37,6 @@ class Task(db.Model):
     if self.due_by:
       return 'Due: ' + self.due_by.strftime("%d %b %y")
     return ''
+
+  def priority_str(self):
+    return dict(PRIORITY_CHOICES)[self.priority]
