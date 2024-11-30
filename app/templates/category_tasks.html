@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='tasks.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+  <h2>Tasks by category</h2>
+
+  <div id="category-list">
+    {% for category in categories %}
+      <a href="{{ url_for('main.category_tasks', category=category) }}" 
+        {% if category == selected_category %}
+          class="selected"
+        {% endif %}>
+        {{ category }}</a>
+    {% endfor %}
+  </div>
+
+  {% include '_task_list.html' %}
+
+  <div class="actions">
+    <a href="{{ url_for('main.new_task') }}">Add New Task</a>
+  </div>  
+{% endblock %}
+
+

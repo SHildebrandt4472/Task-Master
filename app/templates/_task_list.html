@@ -1,0 +1,46 @@
+<div class="tasks">      
+    {% for task in tasks %}         
+
+      {% if task.is_outstanding() %}
+        <a class="task sts-sts-{{task.status}}" href="{{ url_for('main.edit_task', id=task.id) }}">
+      {% else %}    
+        <div class="task sts-{{task.status}}">     
+      {% endif %}    
+        
+        <div class="task-info">
+          <div class="task-name">
+            {{ task.name }}
+          </div>
+
+          <div class="task-description">
+            {{ task.description }}
+          </div>      
+      </div>
+
+        <div class="task-category">
+          {{ task.category or 'Other' }}
+        </div>      
+
+        <div class="task-btns">
+
+          <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
+              <input class="delete" type="submit" value="X" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
+          </form>
+          
+          {% if task.is_outstanding() %}
+            <form action="{{ url_for('main.complete_task', id=task.id) }}" method="POST">
+              <input class="done" type="submit" value="&#x2714 Done">
+            </form> 
+          {% endif %}
+
+        </div>      
+
+      {% if task.is_outstanding() %}
+        </a>            
+      {% else %}    
+        </div>  
+      {% endif %}    
+      
+    
+    {% endfor %}      
+  </div> 

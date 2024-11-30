@@ -139,9 +139,35 @@ a.task:hover {
   background: linear-gradient(rgb(118, 157, 66), rgb(62, 111, 12));   
 }
 
+#category-list {
+  margin-top: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
 
+#category-list a {
+  text-decoration: none;
+  display: inline-block; 
+  font: inherit;  
+  font-size: 16px;    
+  font-weight: bold;  
+  padding: 3px 10px;  
+  height: 30px; 
+  border-radius: 3px; 
+  background: #aaa;   
+  box-shadow: rgba(0,0,0,1) 2px 2px 3px;
+  text-align: center;
+  color: #fff;   
+  margin-right: 5px;
+}
 
+#category-list a:hover {
+  background-color: #888;  
+}
 
+#category-list a.selected {
+  background: linear-gradient(rgb(34, 34, 134), rgb(30, 30, 103));  
+}
 
 
 

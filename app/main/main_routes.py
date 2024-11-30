@@ -13,7 +13,30 @@ def home():
     if not current_user.is_authenticated:
       return redirect(url_for('.login'))
         
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home',tasks=current_user.tasks)
+
+@bp.route('/categorytasks/<category>')
+@login_required
+def category_tasks(category):
+    #category = request.args.get('category')
+    if category == 'All':
+        tasks = current_user.tasks
+    elif category == 'Other':
+        #tasks = Task.query.filter(Task.user_id==current_user.id, Task.category == '')
+        tasks = Task.query.filter_by(user_id=current_user.id, category='').all()
+    else:
+      tasks = Task.query.filter_by(user_id=current_user.id, category=category).all()
+
+    categories_rows = Task.query.with_entities(Task.category).filter_by(user_id=current_user.id).distinct()
+    categories = [row[0] for row in categories_rows]
+    for category in categories:
+      if not category:
+        categories.remove(category)
+        categories.append('Other')
+    categories = ['All'] + categories
+
+    
+    return render_template('category_tasks.html', tasks=tasks, categories=categories, selected_category=category)
     
 
 @bp.route('/login', methods=['GET', 'POST'])
