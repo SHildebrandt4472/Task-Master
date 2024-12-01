@@ -4,12 +4,12 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User
 
+#Forms for login and registration
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
-
 
 class RegistrationForm(FlaskForm):
     registration_code = StringField('Registration Code', validators=[DataRequired()])
@@ -20,6 +20,7 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Verify Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
+    #Validation of forms
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data.lower()).first()
         if user is not None:

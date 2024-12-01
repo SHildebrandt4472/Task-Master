@@ -16,15 +16,15 @@ from app.models import db, User, Task
 from app.cli import bp
 
 @bp.cli.command("init_data")
-def init_data():
+def init_data():  # Preset data for testing and initial deployment 
   """Add initial dbug data to db"""
 
   User.query.delete()
   Task.query.delete()
 
-  user = User(username="sam",
-           email="sam@fullsteam.net",
-           display_name="Sam",           
+  user = User(username="demo",
+           email="demo@demo.com",
+           display_name="Demo User",           
            access=40)
   user.set_password("train")
   db.session.add(user)  

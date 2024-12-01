@@ -8,19 +8,13 @@ from datetime import datetime
 login = LoginManager()
 
 ACCESS = {
-  'none'     :  0,
   'basic'    : 10,
-  'advanced' : 20,
-  'admin'    : 30,
-  'super'    : 40, 
+  'admin'    : 20,
 }
 
 ACCESS_STRS = {
-  ACCESS['none']    : "No Access",
   ACCESS['basic']   : "Standard",
-  ACCESS['advanced']: "Advanced",
   ACCESS['admin']   : "Admin",
-  ACCESS['super']   : "Super",
 }
 
 class User(UserMixin, db.Model):
@@ -53,17 +47,8 @@ class User(UserMixin, db.Model):
   def is_basic(self):
     return self.access >= ACCESS['basic']
 
-  def is_advanced(self):
-    return self.access >= ACCESS['advanced']
-
   def is_admin(self):
     return self.access >= ACCESS['admin']
-
-  def is_super(self):
-    return self.access >= ACCESS['super']
-
-  def set_admin(self):
-    self.access = ACCESS['admin']
   
   def name(self):
     return self.display_name or self.username
