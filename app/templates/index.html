@@ -7,9 +7,41 @@
 
 {% block content %}
 
-  <h2>My Tasks</h2>  
+  <h2>Overdue Tasks</h2>
+  {% if overdue_tasks %}
+    {% with tasks=overdue_tasks %}
+      {% include '_task_list.html' %}
+    {% endwith %}
+  {% else %}
+    <p class="no-tasks">You curently have no overdue tasks</p>
+  {% endif %}
 
-  {% include '_task_list.html' %} 
+  <h2>Upcoming Tasks</h2>
+  {% if upcoming_tasks %}
+    {% with tasks=upcoming_tasks %}
+      {% include '_task_list.html' %}
+    {% endwith %}
+  {% else %}
+    <p class="no-tasks">You curently have no upcoming tasks</p>
+  {% endif %}
+
+  <h2>Important Tasks</h2>
+  {% if important_tasks %}
+    {% with tasks=important_tasks %}
+      {% include '_task_list.html' %}
+    {% endwith %}
+  {% else %}
+    <p class="no-tasks">You curently have no important tasks</p>
+  {% endif %}
+
+  <h2>Recently Added Tasks</h2>
+  {% if recently_added_tasks %}
+    {% with tasks=recently_added_tasks %}
+      {% include '_task_list.html' %}
+    {% endwith %}
+  {% else %}
+    <p class="no-tasks">You curently have no recently added tasks</p>
+  {% endif %}
 
   <div class="actions">
     <a href="{{ url_for('main.new_task') }}">Add New Task</a>

@@ -14,9 +14,25 @@ def home():
     if not current_user.is_authenticated:
       return redirect(url_for('.login'))
 
+    #tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
     tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
+    overdue_tasks = []
+    upcoming_tasks = []
+    important_tasks = []
+    recently_added_tasks = []
+    for task in tasks:
+      if task.is_overdue():
+        overdue_tasks.append(task)
+      elif task.is_coming_up():
+        upcoming_tasks.append(task)
+      elif task.is_important() and task.is_outstanding():
+        important_tasks.append(task)
+      elif task.is_recently_added() and task.is_outstanding():
+        recently_added_tasks.append(task)
 
-    return render_template('index.html', title='Home',tasks=tasks)
+
+    return render_template('index.html', title='Home',
+    upcoming_tasks=upcoming_tasks, overdue_tasks=overdue_tasks, important_tasks=important_tasks, recently_added_tasks=recently_added_tasks) 
 
 @bp.route('/categorytasks/<category>')
 @login_required

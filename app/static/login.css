@@ -16,8 +16,8 @@ form.login input[type=password]:focus {
 }
 
 form.login input[type=submit] {
-  color: #eee;  
-  background-color: #888;  
+  color: white;  
+  background-color: rgb(7, 17, 127);
   border: none;
   border-radius: 10px;
   width: 100%;
@@ -32,7 +32,7 @@ form.login input[type=submit] {
 }
 
 form.login input[type=submit]:hover {
-  background-color: #aaa;  
+  background-color: #34a;
 }
 
 form.login select {

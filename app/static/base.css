@@ -11,7 +11,7 @@
 
 body {  
   color: #fff;
-  background: #666;  
+  background: #555;  
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -21,7 +21,7 @@ p {
 
 #header {  
   overflow: hidden;
-  background: linear-gradient(#777, #555);  
+  background: linear-gradient(#777, #444);  
   text-align: center;
 }
 
@@ -32,6 +32,10 @@ p {
   font-size: 50px;
   display: inline-block;
   margin-top: 10px;
+}
+
+h2{
+  color: rgb(244, 174, 22);
 }
 
 #header img.logo {
@@ -147,4 +151,8 @@ a.button:hover {
   background: #444;
 }
 
+.no-tasks {
+  color: white;
+  padding-left: 10px;
+}
 

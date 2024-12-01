@@ -38,13 +38,26 @@ class Task(db.Model):
   def is_completed(self):
     return self.status == STS_COMPLETED
 
-  def is_overdue(self):
-    return self.due_by and self.due_by.date() < datetime.date.today()    
+  def is_important(self):
+    if self.priority and self.priority > P_LOW:
+      return True
 
-  #def due_str(self):
-  #  if self.due_by:
-  #    return 'Due: ' + self.due_by.strftime("%d %b %y")
-  #  return ''
+  def is_overdue(self):
+    if self.is_completed():
+      return False
+    else:
+      return self.due_by and self.due_by.date() < datetime.date.today() 
+
+  def is_coming_up(self):
+    if self.is_completed():
+      return False
+    else:
+      next_week = datetime.date.today() + datetime.timedelta(days=7)
+      return self.due_by and self.due_by.date() < next_week
+  
+  def is_recently_added(self):
+    last_week = datetime.date.today() - datetime.timedelta(days=7)
+    return self.created_at and self.created_at.date() > last_week
 
   def priority_str(self):    
     priority = self.priority or 0
