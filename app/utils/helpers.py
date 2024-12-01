@@ -41,14 +41,30 @@ def fmt_date(dt):
     return ''
   return dt.strftime("%d %b %y")
 
-def fmt_datetime(dt, include_tz=False):
-  if not isinstance(dt, datetime.datetime):
+def fmt_date_daysuntil(date):
+  if not isinstance(date, datetime.datetime):
     return ''
+  
+  try:
+    diff = date.date() - datetime.date.today()
+    days = int(diff.total_seconds() / (60*60*24))
+  except Exception as e:    
+    return('')
+   
+  
+  days_str = pluralise('day', days)
 
-  if include_tz:
-    return dt.strftime("%d %b %Y, %H:%M:%S (%Z)")
-  else:
-    return dt.strftime("%d %b %Y, %H:%M:%S")
+  if days < -1: 
+    return f"{-days} {days_str} ago"
+  if days == -1:
+    return 'Yesterday'
+  if days == 0:
+    return 'Today'
+  if days == 1:
+    return 'Tomorrow'
+  
+  return f"{days} {days_str}"
+
 
 #
 # HTML Generators

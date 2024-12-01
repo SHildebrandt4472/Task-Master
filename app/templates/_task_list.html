@@ -1,11 +1,7 @@
 <div class="tasks">      
-    {% for task in tasks %}         
+    {% for task in tasks %}  
 
-      {% if task.is_outstanding() %}
-        <a class="task sts-sts-{{task.status}}" href="#" onclick="toggle_details('{{ task.id }}')">
-      {% else %}    
-        <div class="task sts-{{task.status}}">     
-      {% endif %}    
+      <a class="task sts-{{task.status}}" href="#" onclick="toggle_details('{{ task.id }}')"> 
         
         <div class="task-info">
           <div class="task-name">
@@ -13,21 +9,21 @@
           </div>
 
           <div class="task-description">
-            {{ task.description }}
+            {{ task.short_desc() }}
           </div>      
 
-          <div class="task-due">
-            {{ task.due_str() }}
-          </div>
+          {% if task.is_outstanding() %}
+            <div class="task-due">
+              {{ h.fmt_date_daysuntil(task.due_by) }}
+            </div>
+          {% endif %}  
         </div>
 
         <div class="task-category">
           {{ task.category or 'Other' }}
         </div>      
 
-        <div class="task-btns">
-
-          
+        <div class="task-btns">          
           {% if task.is_outstanding() %}
             <form action="{{ url_for('main.complete_task', id=task.id) }}" method="POST">
               <input class="done" type="submit" value="&#x2714 Done">
@@ -35,34 +31,29 @@
           {% endif %}
 
         </div>      
-
-      {% if task.is_outstanding() %}
-        </a>            
-      {% else %}    
-        </div>  
-      {% endif %}    
+      </a>                    
 
       <div id="taskdetails-{{task.id}}" class="task-drop-down">
+        <div class="task-details-grid">
+          <div class="label">Description:</div>
+          <div class="value">{{ task.description }}</div>
         
-        <div class="full-task-description">
-            <span class="label">Description:</span>{{ task.description }}
-          </div>
+          <div class="label">Due by date:</div>
+          <div class="value">{{ h.fmt_date(task.due_by) }}</div>          
+                  
+          <div class="label">Priority:</div>
+          <div class="value">{{ task.priority_str() }}</div>
+        </div>  
 
-          <div class="task-due-date">
-            <span class="label">Due by date:</span>{{ h.fmt_date(task.due_by) }}
-          </div>
-        
-          <div class="task-priority">
-            <span class="label">Priority:</span>{{ task.priority }}
-          </div>
+        <div class="actions">
+          {% if task.is_outstanding() %}
+            <a href="{{ url_for('main.edit_task', id=task.id) }}">Edit</a>
+          {% endif %}  
 
-          <div class="task-actions">
-            <a class="" href="{{ url_for('main.edit_task', id=task.id) }}">Edit</a>
-
-            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
-                <input class="delete" type="submit" value="Delete" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
-            </form>
-          </div>
+          <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">
+            <input class="delete" type="submit" value="Delete" onclick="return confirm('Delete Task {{task.name}}\n.Are You Sure?')">
+          </form>
+        </div>
       </div>
       
     

@@ -61,7 +61,7 @@ p {
 
 #menubar li {  
   display: inline-block;
-  padding: 14px 5px;
+  padding: 10px 0px;
   /*background-color: #037;*/
   text-align: center;
 }
@@ -74,7 +74,7 @@ p {
   /* color: #eee; */
   text-decoration: none;
   /*background-color: #037;*/
-  padding: 10px 16px;
+  padding: 10px 10px;
   color: #eee;  
 }
 
