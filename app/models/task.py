@@ -29,6 +29,9 @@ class Task(db.Model):
   def done(self):
     self.status = STS_COMPLETED 
 
+  def undo(self):
+    self.status = STS_NEW    
+
   def is_outstanding(self):
     return self.status < STS_COMPLETED
 
@@ -56,6 +59,6 @@ class Task(db.Model):
   
   def short_desc(self):
     desc = self.description
-    if len(desc) > 50:
-      desc = desc[:47] + " ..." 
+    if len(desc) > 40:
+      desc = desc[:37] + " ..." 
     return desc  

@@ -103,6 +103,17 @@ def complete_task(id):
     db.session.commit()
     return redirect(url_for('.home'))
 
+@bp.route('/uncomplete/<id>', methods=['POST'])
+@login_required
+def uncomplete_task(id):
+    task = Task.query.get(id)    
+    if not task or task.user_id != current_user.id:       
+      abort(403)
+
+    task.undo()
+    db.session.commit()
+    return redirect(url_for('.home'))
+
 @bp.route('/delete/<id>', methods=['POST'])
 @login_required
 def delete_task(id):

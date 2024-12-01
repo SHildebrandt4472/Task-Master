@@ -1,11 +1,9 @@
 <div class="tasks">      
     {% for task in tasks %}        
 
-      <a class="task sts-{{task.status}}" href="#" onclick="toggle_details('{{ task.id }}')"> 
+      <a class="task sts-{{task.status}}" onclick="toggle_details('{{ task.id }}')"> 
         
-        <div class="task-info">
-          
-            
+        <div class="task-info">            
           
           <div class="task-name">
             {{ task.name }}
@@ -29,14 +27,17 @@
               {{ h.fmt_date_daysuntil(task.due_by) }}
             </div>
           {% endif %}  
-        </div>
-
-        {% if task.is_overdue() and task.is_outstanding() %}
+        
+          {% if task.is_overdue() and task.is_outstanding() %}
           <div class="task-overdue">
             Overdue
           </div>
         {% endif %}
 
+        
+        </div>
+
+        
         <div class="task-category">
           {{ task.category or 'Other' }}
         </div>      
@@ -55,6 +56,9 @@
         <div class="task-details-grid">
           <div class="label">Description:</div>
           <div class="value">{{ task.description }}</div>
+
+          <div class="label">Category:</div>
+          <div class="value">{{ task.category or 'Other' }}</div>
         
           <div class="label">Due by date:</div>
           <div class="value">{{ h.fmt_date(task.due_by) }}</div> 
@@ -72,6 +76,10 @@
         <div class="actions">
           {% if task.is_outstanding() %}
             <a href="{{ url_for('main.edit_task', id=task.id) }}">Edit</a>
+          {% else %}
+          <form action="{{ url_for('main.uncomplete_task', id=task.id) }}" method="POST">
+            <input type="submit" value="Undo" >
+          </form>
           {% endif %}  
 
           <form action="{{ url_for('main.delete_task', id=task.id) }}" method="POST">

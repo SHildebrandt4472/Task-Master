@@ -64,7 +64,7 @@
     /* min-width: 160px; */
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     .task-description {
       display: none;
     }
@@ -94,15 +94,21 @@
     margin-right: 10px;
     color: #f6c525;    
     font-weight: bold;
-    padding-left: 10px;
-    min-width: 110px;
+    padding-left: 10px;    
     text-align: right;
   }  
+
+  @media only screen and (max-width: 500px) {
+    .task-category {
+      display: none;
+    }
+  }
 
 
 
   .task-btns { 
     min-width: 80px;    
+    padding-right: 5px;
   }
 
   .task-btns form {
@@ -135,7 +141,7 @@
   border-left: 1px solid #8b1;
   border-right: 1px solid #370;
   border-bottom: 1px solid #370;
-  background: linear-gradient(#769d42, #3e6f0c);   
+  background: linear-gradient(#769d42, #3e6f0c);     
 }
 
 .task-btns input[type=submit].delete {
@@ -194,7 +200,8 @@ a.task:hover {
 
 .actions {
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 10px; 
+
 }
 
 .actions form {
@@ -252,6 +259,7 @@ a.task:hover {
   text-align: center;
   color: #fff;   
   margin-right: 0px;
+  margin-bottom: 5px;
 }
 
 #category-list a:hover {
