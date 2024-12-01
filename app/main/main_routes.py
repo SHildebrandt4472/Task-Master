@@ -23,12 +23,12 @@ def home():
 def category_tasks(category):
     #category = request.args.get('category')
     if category == 'All':
-        tasks = current_user.tasks
+        tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
     elif category == 'Other':
         #tasks = Task.query.filter(Task.user_id==current_user.id, Task.category == '')
-        tasks = Task.query.filter_by(user_id=current_user.id, category='').all()
+        tasks = Task.query.filter_by(user_id=current_user.id, category='').order_by(text('due_by is null, due_by')).all()
     else:
-      tasks = Task.query.filter_by(user_id=current_user.id, category=category).all()
+      tasks = Task.query.filter_by(user_id=current_user.id, category=category).order_by(text('due_by is null, due_by')).all()
 
     categories_rows = Task.query.with_entities(Task.category).filter_by(user_id=current_user.id).distinct()
     categories = [row[0] for row in categories_rows]

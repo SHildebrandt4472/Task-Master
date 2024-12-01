@@ -1,5 +1,6 @@
 #from flask import current_app as app, session, g
 from app.models import db
+import datetime
 
 STS_NEW = 0
 STS_COMPLETED = 1
@@ -35,7 +36,7 @@ class Task(db.Model):
     return self.status == STS_COMPLETED
 
   def is_overdue(self):
-    return self.due_by and self.due_by < datetime.datetime.now()    
+    return self.due_by and self.due_by.date() < datetime.date.today()    
 
   #def due_str(self):
   #  if self.due_by:
@@ -47,6 +48,11 @@ class Task(db.Model):
     if priority >= 0 and priority < len(PRIORITY_STRS):
       return PRIORITY_STRS[priority]
     return ''
+
+  def status_str(self):
+    if self.status == STS_COMPLETED:
+      return 'Completed'
+    return 'Outstanding'
   
   def short_desc(self):
     desc = self.description

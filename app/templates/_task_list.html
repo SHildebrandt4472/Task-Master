@@ -1,12 +1,24 @@
 <div class="tasks">      
-    {% for task in tasks %}  
+    {% for task in tasks %}        
 
       <a class="task sts-{{task.status}}" href="#" onclick="toggle_details('{{ task.id }}')"> 
         
         <div class="task-info">
+          
+            
+          
           <div class="task-name">
             {{ task.name }}
           </div>
+
+          {% if task.priority and task.priority > 0 %}
+            <div class="task-priority p-{{task.priority}}">
+              &#9733;
+              {% if task.priority and task.priority > 1 %}
+              &#9733;
+              {% endif %}
+            </div>
+          {% endif %}
 
           <div class="task-description">
             {{ task.short_desc() }}
@@ -18,6 +30,12 @@
             </div>
           {% endif %}  
         </div>
+
+        {% if task.is_overdue() and task.is_outstanding() %}
+          <div class="task-overdue">
+            Overdue
+          </div>
+        {% endif %}
 
         <div class="task-category">
           {{ task.category or 'Other' }}
@@ -39,10 +57,16 @@
           <div class="value">{{ task.description }}</div>
         
           <div class="label">Due by date:</div>
-          <div class="value">{{ h.fmt_date(task.due_by) }}</div>          
+          <div class="value">{{ h.fmt_date(task.due_by) }}</div> 
+          
+          <div class="label">Created date: </div>
+          <div class="value">{{ h.fmt_date(task.created_at) }}</div>
                   
           <div class="label">Priority:</div>
           <div class="value">{{ task.priority_str() }}</div>
+
+          <div class="label">Status: </div>
+          <div class="value">{{ task.status_str() }}</div>
         </div>  
 
         <div class="actions">

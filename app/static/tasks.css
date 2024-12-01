@@ -34,6 +34,17 @@
     padding-left: 10px;
     flex: 1;
   }
+  .task-priority {
+    display: inline-block;  
+    font-size:20px ;
+    color: #00eeff;
+  }
+
+  .task-priority.p-2 {
+    color: #fff200;
+    font-weight: bold;
+  }
+
   .task-name {
     /*border: 1px solid orange;*/
     display: inline-block; 
@@ -68,6 +79,14 @@
     font-weight: bold;
   }  
   
+  .task-overdue {
+    color: white;
+    font-weight: bold;
+    background-color: rgb(179, 0, 0);
+    display: inline-block;
+    padding: 2px 5px;
+  }
+
   .task-category {
     /* border: 1px solid pink;  */
     /*display: inline-block;  */
@@ -76,6 +95,8 @@
     color: #f6c525;    
     font-weight: bold;
     padding-left: 10px;
+    min-width: 110px;
+    text-align: right;
   }  
 
 
@@ -145,7 +166,7 @@ a.task:hover {
   transition: max-height 1s, padding 1s;  
 }
  div.show {                        
-  max-height: 150px;        
+  max-height: 250px;        
   padding: 10px;
   transition: max-height 1s,  padding 1s;
 } 
@@ -153,6 +174,7 @@ a.task:hover {
 .task-details-grid {
   display:grid; 
   grid-template-columns: 120px auto; 
+  row-gap: 5px;
 }
 
 .task-details-grid .label {
