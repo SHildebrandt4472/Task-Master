@@ -20,8 +20,8 @@ def init_app(app):
     login.init_app(app)
 
     @app.context_processor
-    def inject_default_template_variables():   
-         return dict(h=helpers)
+    def inject_default_template_variables():   #injects default template variables
+         return dict(h=helpers)  #makes helper functions available in templlates
     
     
 
@@ -31,10 +31,3 @@ def init_app(app):
         current_user.update_last_seen()
 
 from . import main_routes
-
-
-
-
-
-
-

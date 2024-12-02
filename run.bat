@@ -1,6 +1,3 @@
-
-
-
 if not defined VIRTUAL_ENV (
   call venv\scripts\activate.bat
 )

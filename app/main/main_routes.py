@@ -14,7 +14,6 @@ def home():
     if not current_user.is_authenticated:
       return redirect(url_for('.login'))
 
-    #tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
     tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
     overdue_tasks = []
     upcoming_tasks = []
@@ -41,11 +40,10 @@ def home():
 @bp.route('/categorytasks/<category>')
 @login_required
 def category_tasks(category):
-    #category = request.args.get('category')
+
     if category == 'All':
         tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
     elif category == 'Other':
-        #tasks = Task.query.filter(Task.user_id==current_user.id, Task.category == '')
         tasks = Task.query.filter_by(user_id=current_user.id, category='').order_by(text('due_by is null, due_by')).all()
     else:
       tasks = Task.query.filter_by(user_id=current_user.id, category=category).order_by(text('due_by is null, due_by')).all()
@@ -81,8 +79,9 @@ def add_task():
     task.priority = request.form['priority']
     if request.form['due_by']:
       task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
-    current_user.tasks.append(task)
-    db.session.commit()         
+
+    current_user.tasks.append(task) # add the task to the users list of tasks
+    db.session.commit()             # store the data in the data base file
 
     return redirect(session['back_to'] or url_for('.home'))
 

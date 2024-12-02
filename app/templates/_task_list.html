@@ -61,7 +61,7 @@
           <div class="value">{{ task.category or 'Other' }}</div>
         
           <div class="label">Due by date:</div>
-          <div class="value">{{ h.fmt_date(task.due_by) }}</div> 
+          <div class="value">{{ h.fmt_date(task.due_by) }}</div>   <!-- example using helper function in a templete-->
           
           <div class="label">Created date: </div>
           <div class="value">{{ h.fmt_date(task.created_at) }}</div>
