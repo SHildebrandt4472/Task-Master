@@ -23,16 +23,20 @@ def home():
     for task in tasks:
       if task.is_overdue():
         overdue_tasks.append(task)
-      elif task.is_coming_up():
-        upcoming_tasks.append(task)
       elif task.is_important() and task.is_outstanding():
-        important_tasks.append(task)
+        important_tasks.append(task)  
+      elif task.is_coming_up():
+        upcoming_tasks.append(task)      
       elif task.is_recently_added() and task.is_outstanding():
         recently_added_tasks.append(task)
 
-
-    return render_template('index.html', title='Home',
-    upcoming_tasks=upcoming_tasks, overdue_tasks=overdue_tasks, important_tasks=important_tasks, recently_added_tasks=recently_added_tasks) 
+    session['back_to'] = request.path # Store the current url to come back to    
+    return render_template('index.html', 
+                              title='Home',
+                            upcoming_tasks=upcoming_tasks, 
+                            overdue_tasks=overdue_tasks, 
+                            important_tasks=important_tasks, 
+                            recently_added_tasks=recently_added_tasks) 
 
 @bp.route('/categorytasks/<category>')
 @login_required
@@ -54,7 +58,7 @@ def category_tasks(category):
         categories.append('Other')
     categories = ['All'] + categories
 
-    
+    session['back_to'] = request.path # Store the current url to come back to    
     return render_template('category_tasks.html', tasks=tasks, categories=categories, selected_category=category)
    
 
@@ -79,8 +83,8 @@ def add_task():
       task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
     current_user.tasks.append(task)
     db.session.commit()         
-    
-    return redirect(url_for('.home'))
+
+    return redirect(session['back_to'] or url_for('.home'))
 
 @bp.route('/edit/<id>')
 @login_required
@@ -103,10 +107,9 @@ def update_task(id):
     task.category = request.form['category'].title()
     task.priority = request.form['priority']
     if request.form['due_by']:
-      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
- 
+      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d') 
     db.session.commit() 
-    return redirect(url_for('.home'))
+    return redirect(session['back_to'] or url_for('.home'))    
 
 @bp.route('/complete/<id>', methods=['POST'])
 @login_required
@@ -116,8 +119,8 @@ def complete_task(id):
       abort(403)
 
     task.done()
-    db.session.commit()
-    return redirect(url_for('.home'))
+    db.session.commit()    
+    return redirect(session['back_to'] or url_for('.home'))
 
 @bp.route('/uncomplete/<id>', methods=['POST'])
 @login_required
@@ -128,7 +131,7 @@ def uncomplete_task(id):
 
     task.undo()
     db.session.commit()
-    return redirect(url_for('.home'))
+    return redirect(session['back_to'] or url_for('.home'))
 
 @bp.route('/delete/<id>', methods=['POST'])
 @login_required
@@ -139,7 +142,7 @@ def delete_task(id):
 
     db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('.home'))
+    return redirect(session['back_to'] or url_for('.home'))
 
 
 ## -- Login and Register routes --------------

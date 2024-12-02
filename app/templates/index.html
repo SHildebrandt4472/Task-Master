@@ -16,15 +16,6 @@
     <p class="no-tasks">You curently have no overdue tasks</p>
   {% endif %}
 
-  <h2>Upcoming Tasks</h2>
-  {% if upcoming_tasks %}
-    {% with tasks=upcoming_tasks %}
-      {% include '_task_list.html' %}
-    {% endwith %}
-  {% else %}
-    <p class="no-tasks">You curently have no upcoming tasks</p>
-  {% endif %}
-
   <h2>Important Tasks</h2>
   {% if important_tasks %}
     {% with tasks=important_tasks %}
@@ -32,6 +23,15 @@
     {% endwith %}
   {% else %}
     <p class="no-tasks">You curently have no important tasks</p>
+  {% endif %}
+
+  <h2>Upcoming Tasks</h2>
+  {% if upcoming_tasks %}
+    {% with tasks=upcoming_tasks %}
+      {% include '_task_list.html' %}
+    {% endwith %}
+  {% else %}
+    <p class="no-tasks">You curently have no upcoming tasks</p>
   {% endif %}
 
   <h2>Recently Added Tasks</h2>
