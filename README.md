@@ -1,4 +1,4 @@
-![Logo](https://github.com/SHildebrandt4472/Password-checker/blob/main/images/readme_logo.png)
+![Logo](https://github.com/SHildebrandt4472/Task-Master/blob/main/app/static/logo.png)
 
 # Task Master 
 
