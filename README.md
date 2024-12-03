@@ -77,7 +77,11 @@ Feel free to explore the app and make use of its features to effectively manage 
 
 11. You can now use the app
 
-12. To stop the app, press Ctrl+C in the terminal
+12. To sign up as a new user, press the logout button
+    and then select sign up. Use the registration code SIGNMEUP
+    and fill in your details.
+
+13. To stop the app, press Ctrl+C in the terminal
 
 ## License
 
