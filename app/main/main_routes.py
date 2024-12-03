@@ -67,7 +67,10 @@ def new_task(category=None):
   task = Task()
   if category != "All" and category != "Other":
     task.category = category
-  return render_template('new_task.html', task=task, action_url = url_for('main.add_task', id=task.id))
+  return render_template('new_task.html', 
+                         task=task, 
+                         action_url = url_for('main.add_task', id=task.id),
+                         back_to_url = session['back_to'])
 
 @bp.route('/add>', methods=['POST'])
 @login_required
@@ -84,6 +87,7 @@ def add_task():
     db.session.commit()             # store the data in the data base file
 
     return redirect(session['back_to'] or url_for('.home'))
+                    
 
 @bp.route('/edit/<id>')
 @login_required
@@ -92,7 +96,10 @@ def edit_task(id):
     if not task or task.user_id != current_user.id:       
       abort(403)
        
-    return render_template('edit_task.html', task=task, action_url = url_for('main.update_task', id=task.id))
+    return render_template('edit_task.html', 
+                           task=task, 
+                           action_url = url_for('main.update_task', id=task.id),
+                           back_to_url = session['back_to'])
     
 @bp.route('/update/<id>', methods=['POST'])
 @login_required

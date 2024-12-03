@@ -2,11 +2,11 @@
 
 # Task Master 
 
-This is a simple todo app that helps you manage your tasks and stay organized. The app allows you to create, edit, and delete tasks, and provides features like due dates, priority levels, and task categories. It was developed by Sam Hildebrandt for the year 12 Software Engineering task 1.
+This is a simple todo list app that helps you manage your tasks and stay organized. The app allows you to create, edit, and delete tasks, and provides features like due dates, priority levels, and task categories. It was developed by Sam Hildebrandt for the year 12 Software Engineering task 1.
 
 ## How to use Task Master
 
-Task Master is a todo app that includes all of the following featurtes to manage all your tasks that need to get done.
+Task Master is a todo app that includes the following features to manage all your tasks that need to get done.
 
 1. Create a task: Click on the "New Task" button and enter the task details such as title, description, due date, priority level, and category.
 
@@ -28,20 +28,21 @@ Feel free to explore the app and make use of its features to effectively manage 
 
 ## Installation
 
-1. Clone the git repo to a local directory
+1. Clone the git repository to a local directory
 
 2. Change to the project directory
 
-3. Create a virtual environment in the project directory
+3. Create a virtual python environment in the project directory
 
 ```bash
    python -m venv venv
 ```
 
 4. Activate the virtual environment
+  (for WINDOWS)
 
 ```bash
-   WINDOWS: venv\Scripts\activate
+   venv\Scripts\activate
 ```
 
 5. Install the required packages
@@ -78,8 +79,7 @@ Feel free to explore the app and make use of its features to effectively manage 
 11. You can now use the app
 
 12. To sign up as a new user, press the logout button
-    and then select sign up. Use the registration code SIGNMEUP
-    and fill in your details.
+    and select sign up. Use the registration code <b>SIGNMEUP</b> and fill in your details.
 
 13. To stop the app, press Ctrl+C in the terminal
 
