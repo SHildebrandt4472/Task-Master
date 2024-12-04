@@ -11,6 +11,7 @@ P_HIGH = 2
 
 PRIORITY_STRS = ['Low', 'Medium','High']
 
+# Define the Task model
 class Task(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))    
@@ -22,7 +23,7 @@ class Task(db.Model):
   due_by = db.Column(db.DateTime)         
   created_at = db.Column(db.DateTime, default=db.func.datetime('now'))
 
-
+#Define all little functions to check the status of the task
   def __repr__(self):
     return f"<Task {self.id}: {self.name}>"   
 

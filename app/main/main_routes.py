@@ -10,11 +10,11 @@ from sqlalchemy import text
 
 @bp.route('/')
 @bp.route('/index')
-def home():
+def home():  # Main home page
     if not current_user.is_authenticated:
-      return redirect(url_for('.login'))
+      return redirect(url_for('.login'))  # Redirect to login page if not logged in
 
-    tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
+    tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()  # Get all tasks for the current user
     overdue_tasks = []
     upcoming_tasks = []
     important_tasks = []
@@ -39,7 +39,7 @@ def home():
 
 @bp.route('/categorytasks/<category>')
 @login_required
-def category_tasks(category):
+def category_tasks(category):  # My tasks page
 
     if category == 'All':
         tasks = Task.query.filter_by(user_id=current_user.id).order_by(text('due_by is null, due_by')).all()
@@ -48,9 +48,9 @@ def category_tasks(category):
     else:
       tasks = Task.query.filter_by(user_id=current_user.id, category=category).order_by(text('due_by is null, due_by')).all()
 
-    categories_rows = Task.query.with_entities(Task.category).filter_by(user_id=current_user.id).distinct()
+    categories_rows = Task.query.with_entities(Task.category).filter_by(user_id=current_user.id).distinct()  # Get all categories for the current user
     categories = [row[0] for row in categories_rows]
-    for cat in categories:
+    for cat in categories:  # Sort into categories
       if not cat:
         categories.remove(cat)
         categories.append('Other')
@@ -63,37 +63,37 @@ def category_tasks(category):
 @bp.route('/new')
 @bp.route('/new/<category>')
 @login_required
-def new_task(category=None):
+def new_task(category=None):  # New task page
   task = Task()
   if category != "All" and category != "Other":
     task.category = category
-  return render_template('new_task.html', 
+  return render_template('new_task.html', # Render the new task page
                          task=task, 
                          action_url = url_for('main.add_task', id=task.id),
                          back_to_url = session['back_to'])
 
 @bp.route('/add>', methods=['POST'])
 @login_required
-def add_task():
+def add_task():  # Add a new task
     task = Task()
     task.name = request.form['name']
     task.description = request.form['description']
     task.category = request.form['category'].title()    
     task.priority = request.form['priority']
     if request.form['due_by']:
-      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')
+      task.due_by = datetime.datetime.strptime(request.form['due_by'], '%Y-%m-%d')  # Convert the date string to a datetime object
 
     current_user.tasks.append(task) # add the task to the users list of tasks
     db.session.commit()             # store the data in the data base file
 
-    return redirect(session['back_to'] or url_for('.home'))
+    return redirect(session['back_to'] or url_for('.home'))  # Redirect to the home page
                     
 
 @bp.route('/edit/<id>')
 @login_required
-def edit_task(id):
+def edit_task(id):  # Edit task page
     task = Task.query.get(id)
-    if not task or task.user_id != current_user.id:       
+    if not task or task.user_id != current_user.id:  # Check if the task exists and belongs to the current user     
       abort(403)
        
     return render_template('edit_task.html', 
@@ -103,7 +103,7 @@ def edit_task(id):
     
 @bp.route('/update/<id>', methods=['POST'])
 @login_required
-def update_task(id):
+def update_task(id):  # Update a task
     task = Task.query.get(id)
     if not task or task.user_id != current_user.id:       
       abort(403)
@@ -119,18 +119,18 @@ def update_task(id):
 
 @bp.route('/complete/<id>', methods=['POST'])
 @login_required
-def complete_task(id):
+def complete_task(id):  # Mark a task as complete
     task = Task.query.get(id)    
     if not task or task.user_id != current_user.id:       
       abort(403)
 
     task.done()
     db.session.commit()    
-    return redirect(session['back_to'] or url_for('.home'))
+    return redirect(session['back_to'] or url_for('.home'))  # Redirect to the home page
 
 @bp.route('/uncomplete/<id>', methods=['POST'])
 @login_required
-def uncomplete_task(id):
+def uncomplete_task(id):  # Mark a task as incomplete
     task = Task.query.get(id)    
     if not task or task.user_id != current_user.id:       
       abort(403)
@@ -154,7 +154,7 @@ def delete_task(id):
 ## -- Login and Register routes --------------
 
 @bp.route('/login', methods=['GET', 'POST'])
-def login():
+def login():  # Login page
     if current_user.is_authenticated:
       return redirect(url_for('.home'))
 
@@ -169,7 +169,7 @@ def login():
           login_user(user, remember=form.remember_me.data)      
           return redirect(url_for('.change_password'))
 
-      if user is None or not user.check_password(form.password.data):
+      if user is None or not user.check_password(form.password.data):  # Invalid user
         flash('Invalid username or password','error')
         return redirect(url_for('.login'))
     
@@ -184,29 +184,29 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 @bp.route('/logout')
-def logout():
+def logout():  # Logout
     logout_user()    
     flash('You have successfully logged out')
-    return redirect(url_for('.login'))
+    return redirect(url_for('.login'))  # Redirect to the login page
 
 @bp.route('/register', methods=['GET', 'POST'])
-def register():
+def register():  # Register page
     if current_user.is_authenticated:
       return redirect(url_for('.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
       reg_code = form.registration_code.data.upper()
-      if reg_code != "SIGNMEUP":
+      if reg_code != "SIGNMEUP":  # Check if the registration code is valid
         flash('Registration Code is not valid, contact your site administrator','error')
         return redirect(url_for('.register'))
 
-      user = User(username = form.username.data.lower(),
+      user = User(username = form.username.data.lower(),  # Create a new user
                   email = form.email.data,
                   display_name = form.display_name.data)
       user.set_password(form.password.data)
 
-      db.session.add(user)
-      db.session.commit()
+      db.session.add(user) # Add the user to the database
+      db.session.commit() # Commit the changes to the database
       flash('Your registration is complete, please login to continue')
       return redirect(url_for('.login'))
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form) 

@@ -23,7 +23,7 @@ def init_data():  # Preset data for testing and initial deployment
   User.query.delete()
   Task.query.delete()
   
-  user = User(username="sam",
+  user = User(username="sam",  # Creating a new user with differents attributes
               email="sam@fullsteam.net",
               display_name="Sam")              
   user.set_password("train")
@@ -31,7 +31,7 @@ def init_data():  # Preset data for testing and initial deployment
   db.session.commit()
   print("Created:", user)  
 
-  user = User(username="demo",
+  user = User(username="demo",  # Creating a new demo user with differents attributes
            email="demo@demo.com",
            display_name="Demo User")             
   user.set_password("demo")
